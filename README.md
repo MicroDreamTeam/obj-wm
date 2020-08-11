@@ -1,14 +1,10 @@
 使用点来进行操作对象
-引入方式：
-
-```html
-<script src="index.js"></script>
-<script>
-    Obj.get()
-    Object.pGet()
-</script>
+## 安装
+```shell script
+npm i obj-wm
 ```
 
+## 使用
 ```javascript
 import Obj from 'index'
 Obj.get()

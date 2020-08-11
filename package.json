@@ -9,6 +9,14 @@
   "jest": {
     "testRegex": "/test/.*.js?$"
   },
+  "bugs": {
+    "email": "admin@topx5.com",
+    "url": "https://github.com/MichaelXieShao/obj-wm/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelXieShao/obj-wm.git"
+  },
   "keywords": [
     "object",
     "array",
