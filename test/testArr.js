@@ -17,12 +17,16 @@ describe("# 测试取值",function () {
             }
         }
     }
-    test("#取g的值",function () {
+    test("# 取g的值",function () {
         expect(Obj.get(testObj,"a.b.c.d.e.g")).to.equal(2)
     })
 
-    test("#取f的值",function () {
+    test("# 取f的值",function () {
         expect(Obj.get(testObj,"a.b.c.d.e.f")).to.equal(1)
+    })
+
+    test("# 取不存在的值",function (){
+        expect(Obj.get(testObj,"s.s.ss.sss")).to.be.null
     })
 })
 
@@ -42,5 +46,24 @@ describe('# 测试存值',function () {
         Obj.set(testObj,"a.b.c.d.e",true)
         expect(testObj.a.b.c.d.e).to.be.true
         expect(Obj.get(testObj,"a.b.c.d.e")).to.be.true
+    })
+})
+
+describe('# 测试存在点的取值', function (){
+    let testObj = {
+        "a.a" : 1,
+        "b.b":{
+            "b.c.s" : "1.2.3"
+        }
+    }
+
+    test("# 取Key为带点的值",function (){
+        expect(Obj.get(testObj,"a"+Obj.dot+"a")).to.equal(1)
+        expect(Obj.get(testObj,`b${Obj.dot}b.b${Obj.dot}c${Obj.dot}s`)).to.equal('1.2.3')
+    })
+
+    test("# 存key带点的值",function (){
+        Obj.set(testObj,"s" + Obj.dot + "s",true)
+        expect(testObj['s.s']).to.be.true
     })
 })

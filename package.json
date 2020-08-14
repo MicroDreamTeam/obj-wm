@@ -1,6 +1,6 @@
 {
   "name": "obj-wm",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "使用点来操作对象",
   "main": "index.js",
   "scripts": {

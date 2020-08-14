@@ -1,10 +1,90 @@
 "use strict";
-class Obj{
-    static accessible(value = {}){
+class ObjHandler{
+    /**
+     * The current placeholder for dots in rule keys.
+     *
+     * @type string
+     */
+    dot;
+
+    constructor() {
+        this.dot = Math.random().toString(36).slice(-6);
+    }
+
+    /**
+     * Parse the data Object, converting dots and asterisks.
+     *
+     * @param data
+     * @param newObj
+     * @returns {{}}
+     */
+    parseData(data = {},newObj = true){
+        let newData = {}
+        Object.keys(data).forEach(key => {
+            let value = data[key];
+            if (this.accessible(value)){
+                value = this.parseData(value);
+            }
+
+            let newKey = key.replace(/\./g,this.dot);
+            if (newObj){
+                newData[newKey] = value
+            }else{
+                if (newKey !== key){
+                    data[newKey] = value
+                    delete data[key]
+                }
+            }
+        })
+        if (newObj){
+            return newData;
+        }else{
+            return data
+        }
+
+    }
+
+    /**
+     * Replace the placeholders used in data keys.
+     *
+     * @param data
+     */
+    replacePlaceholders(data = {}){
+        let originalData = {}
+        Object.keys(data).forEach(key => {
+            let value = data[key];
+            if (this.accessible(value)){
+                value = this.replacePlaceholders(value)
+            }
+
+            let newKey = key.replace(new RegExp(this.dot,"g"),".");
+            if (newKey !== key){
+                originalData[newKey] = value
+                delete data[key]
+            }
+        })
+        return originalData;
+    }
+
+    /**
+     * Determine whether the given value is object accessible.
+     *
+     * @param value
+     * @returns {boolean}
+     */
+    accessible(value = {}){
         return Object.prototype.toString.call(value) === '[object Object]';
     }
 
-    static get(value, key,defaults = null){
+    /**
+     * Get an item from an object using "dot" notation.
+     *
+     * @param value
+     * @param key
+     * @param defaults
+     * @returns {null|*}
+     */
+    get(value, key,defaults = null){
         if (!this.accessible(value)){
             return defaults;
         }
@@ -13,44 +93,62 @@ class Obj{
             return value;
         }
 
-        if (value.hasOwnProperty(key)){
-            return value[key];
+        let _value = Object.assign({},value)
+        _value = this.parseData(_value);
+
+        if (_value.hasOwnProperty(key)){
+            return _value[key];
         }
 
         let keys = key.split(".");
         if (keys.length === 1){
-            return value.hasOwnProperty(key)?value[key]:defaults;
+            return _value.hasOwnProperty(key)?_value[key]:defaults;
         }
-        keys.forEach(item => {
-            if (this.accessible(value) && value.hasOwnProperty(item)){
-                value = value[item];
+        keys.some(item => {
+            if (this.accessible(_value) && _value.hasOwnProperty(item)){
+                _value = _value[item];
             }else {
-                return value[item];
+                _value = null
+                return true
             }
         })
 
-        return value;
+        return _value;
     }
 
-    static set(obj, key, value){
+    /**
+     * Set an object item to a given value using "dot" notation.
+     *
+     * If no key is given to the method, the entire object will be replaced.
+     * @param obj
+     * @param key
+     * @param value
+     * @returns {*}
+     */
+    set(obj, key, value){
         if (key === null || key === ''){
             return value;
         }
 
         let keys = key.split(".");
+        this.parseData(obj,false);
 
-        let _obj = obj;
         for (let i = 0; i < keys.length-1;i++){
-            if (!_obj.hasOwnProperty(keys[i]) || !this.accessible(_obj[keys[i]])){
-                _obj[keys[i]] = {}
+            // If the key doesn't exist at this depth, we will just create an empty object
+            // to hold the next value, allowing us to create the objects to hold final
+            // values at the correct depth. Then we'll keep digging into the object.
+            if (!obj.hasOwnProperty(keys[i]) || !this.accessible(obj[keys[i]])){
+                obj[keys[i]] = {}
             }
-            _obj = _obj[keys[i]]
+            obj = obj[keys[i]]
         }
-        _obj[keys[keys.length - 1]] = value
-
+        obj[keys[keys.length - 1]] = value
+        Object.assign(obj,this.replacePlaceholders(obj))
         return obj;
     }
 }
+const Obj = new ObjHandler();
+
 Object.defineProperty(Object.prototype,'pGet',{
     writable:false,
     enumerable:false,
