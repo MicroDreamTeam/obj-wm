@@ -58,12 +58,12 @@ describe('# 测试存在点的取值', function (){
     }
 
     test("# 取Key为带点的值",function (){
-        expect(Obj.get(testObj,"a"+Obj.dot+"a")).to.equal(1)
-        expect(Obj.get(testObj,`b${Obj.dot}b.b${Obj.dot}c${Obj.dot}s`)).to.equal('1.2.3')
+        expect(Obj.get(testObj,"a.?a")).to.equal(1)
+        expect(Obj.get(testObj,`b.?b.b.?c.?s`)).to.equal('1.2.3')
     })
 
     test("# 存key带点的值",function (){
-        Obj.set(testObj,"s" + Obj.dot + "s",true)
+        Obj.set(testObj,"s.?s",true)
         expect(testObj['s.s']).to.be.true
     })
 })

@@ -1,12 +1,5 @@
 "use strict";
 class ObjHandler{
-    /**
-     * The current placeholder for dots in rule keys.
-     *
-     * @type string
-     */
-    dot;
-
     constructor() {
         this.dot = Math.random().toString(36).slice(-6);
     }
@@ -85,6 +78,7 @@ class ObjHandler{
      * @returns {null|*}
      */
     get(value, key,defaults = null){
+        key = key.replace(/\.\?/g,this.dot)
         if (!this.accessible(value)){
             return defaults;
         }
@@ -126,6 +120,7 @@ class ObjHandler{
      * @returns {*}
      */
     set(obj, key, value){
+        key = key.replace(/\.\?/g,this.dot)
         if (key === null || key === ''){
             return value;
         }

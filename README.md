@@ -47,9 +47,9 @@ let testObj = {
             "b.c.s" : "1.2.3"
         }
     }
-Obj.get(testObj,"a" + Obj.dot + "a")
+Obj.get(testObj,"a.?a")
 ```
-> 将`.`替换为`Obj.dot`即可，存同理
+> 在`.`后面加一个`?`
 
 扩展了Object的方法，可以使用
 ```javascript
