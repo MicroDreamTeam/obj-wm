@@ -33,7 +33,7 @@ describe("# 测试取值",function () {
 describe('# 测试存值',function () {
     let testObj = {}
 
-    test("# 一维数组存取",function () {
+    test("# 一层对象存取",function () {
         Obj.set(testObj,"a",true)
         Obj.set(testObj,"b",123)
         Obj.set(testObj,"c","123")
@@ -42,7 +42,7 @@ describe('# 测试存值',function () {
         expect(Obj.get(testObj,"c")).to.equal('123')
     })
 
-    test("# 多维数组存取",function () {
+    test("# 多层对象存取",function () {
         Obj.set(testObj,"a.b.c.d.e",true)
         expect(testObj.a.b.c.d.e).to.be.true
         expect(Obj.get(testObj,"a.b.c.d.e")).to.be.true
@@ -65,5 +65,21 @@ describe('# 测试存在点的取值', function (){
     test("# 存key带点的值",function (){
         Obj.set(testObj,"s.?s",true)
         expect(testObj['s.s']).to.be.true
+    })
+})
+
+describe('# 数组数据的存取',function (){
+    let testObj = {}
+
+    test('# 存取数组',function (){
+        Obj.set(testObj,"test",[{a:1}])
+        expect(Obj.get(testObj,"test")[0].a).to.equal(1)
+    })
+
+    test('# 给现有数组添加值',function (){
+        let testArray = Obj.get(testObj,'test')
+        testArray = testArray.concat([{b:2}])
+        Obj.set(testObj,"test",testArray)
+        expect(Obj.get(testObj,'test').length).to.equal(2)
     })
 })

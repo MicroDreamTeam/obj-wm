@@ -86,7 +86,6 @@ class ObjHandler{
         if (key === null || key === ''){
             return value;
         }
-
         let _value = Object.assign({},value)
         _value = this.parseData(_value);
 
@@ -120,6 +119,9 @@ class ObjHandler{
      * @returns {*}
      */
     set(obj, key, value){
+        if (!this.accessible(obj)){
+            throw new Error('It\'s not object')
+        }
         key = key.replace(/\.\?/g,this.dot)
         if (key === null || key === ''){
             return value;
