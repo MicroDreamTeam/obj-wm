@@ -146,22 +146,4 @@ class ObjHandler{
 }
 const Obj = new ObjHandler();
 
-Object.defineProperty(Object.prototype,'pGet',{
-    writable:false,
-    enumerable:false,
-    configurable:true,
-    value:function (key,defaults = null) {
-        return Obj.get(Object(this),key,defaults)
-    }
-})
-
-Object.defineProperty(Object.prototype,'pSet',{
-    writable:false,
-    enumerable:false,
-    configurable:true,
-    value:function (key,value) {
-        return Obj.set(Object(this),key,value)
-    }
-})
-
-module.exports = Obj;
+export default Obj;

@@ -1,7 +1,7 @@
 ## 使用点来进行操作对象
 
- 我的其他packages：
-[表单统一验证类](https://www.npmjs.com/package/form-validate-wm)
+我们的其他packages：
+[表单统一验证类](https://www.npmjs.com/package/@itwmw/form-validate)
 
 ## 安装
 ```shell script
@@ -50,14 +50,3 @@ let testObj = {
 Obj.get(testObj,"a.?a")
 ```
 > 在`.`后面加一个`?`
-
-扩展了Object的方法，可以使用
-```javascript
-Object.pGet()
-Object.pSet()
-```
-来进行调用，例：
-```javascript
-user.pSet("info.name","xieshao")
-user.pGet("info.name")
-```

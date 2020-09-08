@@ -1,6 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
-var Obj =require('../index')
+var Obj =require('../dist/index')
 
 describe("# 测试取值",function () {
     let testObj = {
