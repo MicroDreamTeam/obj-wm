@@ -18,4 +18,13 @@ export default class Obj {
      * @param value
      */
     static set(obj: object, key: string | null, value: any): void
+
+    /**
+     * Add an element to an array using "dot" notation if it doesn't exist.
+     *
+     * @param obj
+     * @param key
+     * @param value
+     */
+    static add(obj: object, key: string | null, value: any): void
 }

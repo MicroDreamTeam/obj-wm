@@ -83,3 +83,16 @@ describe('# 数组数据的存取',function (){
         expect(Obj.get(testObj,'test').length).to.equal(2)
     })
 })
+
+describe("# add方法测试",function (){
+    let testObj = {}
+    test('# 空对象添加数据',function(){
+        Obj.add(testObj,'test',1)
+        expect(testObj.test).to.equal(1)
+    })
+
+    test('# 对象存在指定属性添加数据',function(){
+        Obj.add(testObj,'test',2)
+        expect(testObj.test).to.equal(1)
+    })
+})

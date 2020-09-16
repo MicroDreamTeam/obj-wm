@@ -143,7 +143,22 @@ class ObjHandler{
         Object.assign(obj,this.replacePlaceholders(obj))
         return obj;
     }
+
+    /**
+     * Add an element to an array using "dot" notation if it doesn't exist.
+     * @param obj
+     * @param key
+     * @param value
+     * @returns {*}
+     */
+    add(obj,key,value){
+        if (this.get(obj,key) === null){
+            obj = this.set(obj,key,value)
+        }
+        return obj;
+    }
 }
 const Obj = new ObjHandler();
 
-export default Obj;
+export default Obj
+// module.exports = Obj
