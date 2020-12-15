@@ -3,3 +3,4 @@
 /package-lock.json
 /coverage
 /webpack.config.js
+.babelrc
