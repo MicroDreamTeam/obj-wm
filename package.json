@@ -4,7 +4,8 @@
   "description": "使用点来操作对象",
   "main": "dist/index.js",
   "scripts": {
-    "build:": "webpack --mode production",
+    "build": "webpack --mode production",
+    "test": "jest /test/.*.js?$",
     "coverage": "jest ./test/* --coverage --bail"
   },
   "jest": {
@@ -32,16 +33,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
     "core-js": "^3.6.5",
     "jest": "^26.0.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
-  },
-  "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-transform-runtime": "^7.11.5",
-    "@babel/preset-env": "^7.11.5"
   }
 }
